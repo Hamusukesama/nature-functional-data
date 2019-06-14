@@ -11,6 +11,8 @@ downloadFile_version <- function(id , version){
 }
 
 # Dependencies
+library(spatstat)
+library(ggrepel)
 library(cowplot)
 library(synapser)
 library(dplyr)
@@ -249,8 +251,21 @@ plotdata <- data.frame(SampleID=rownames(PC$rotation),
                        PC1=PC$rotation[,1], 
                        PC2=PC$rotation[,2])
 
+# Percentage from each PC
+eigen <- PC$sdev^2
+pc1 <- eigen[1]/sum(eigen)
+pc2 <- eigen[2]/sum(eigen)
+
+# Identify outliers - samples 4SDs from the mean
+outliers <- as.character(plotdata$SampleID[c(which(plotdata$PC1 < mean(plotdata$PC1) - 4*sd(plotdata$PC1)),
+                              which(plotdata$PC1 > mean(plotdata$PC1) + 4*sd(plotdata$PC1))), drop = T])
+
+outliers <- c(outliers, as.character(plotdata$SampleID[c(which(plotdata$PC2 < mean(plotdata$PC2) - 4*sd(plotdata$PC2)),
+                                           which(plotdata$PC2 > mean(plotdata$PC2) + 4*sd(plotdata$PC2))), drop = T] ))
+  
 plotdata <- left_join(plotdata, rownameToFirstColumn(covariates, "SampleID")) %>%
-  dplyr::mutate(label = SampleID)
+  dplyr::mutate(label = SampleID) %>% 
+  dplyr::mutate(label = ifelse((label %in% outliers), label, NA))
 
 # Bin Age of Death
 plotdata <- plotdata %>%
@@ -266,25 +281,23 @@ plotdata <- plotdata %>%
 
 # Figure 2
 p = list()
-p[[1]] = ggplot(plotdata, aes(x = PC1, y = PC2))
+p[[1]] = ggplot(plotdata, aes(x = PC1, y = PC2, label = label))
 p[[1]] = p[[1]] + geom_point(aes(color = Institution, shape = Dx, size = AODbin)) +
   ggtitle("PCA log2 CPM") + xlab("PC1 (89.9%)") + ylab("PC2 (4.6%)") + 
   theme_bw(12) + theme(aspect.ratio = 1, plot.title = element_text(hjust = 0.5)) + 
-  labs(shape = "Diagnosis", size = "Age of Death") +
-  guides(color = guide_legend(ncol = 2), shape = guide_legend(ncol = 2), size = guide_legend(ncol = 2))
+  labs(shape = "Diagnosis", size = "Age of Death", tag = "a") +
+  guides(color = guide_legend(ncol = 2), shape = guide_legend(ncol = 2), size = guide_legend(ncol = 2)) + 
+  ggrepel::geom_text_repel(size = 3)
 
-pca = plot_grid(p[[1]], labels = c("a"))
-save_plot("./files/figure2a.pdf", pca, 
-          base_aspect_ratio = 1)
+save_plot("./files/figure2a.pdf", p[[1]])
 
 # Figure 2b
 p[[2]] = ggplot(filt, aes (x= XIST, y = UTY)) 
 p[[2]] = p[[2]] + geom_point(aes(color=`Sex`, shape = `Institution`)) + 
   ggtitle("Sex Check") + 
   theme_bw(12) + theme(aspect.ratio = 1, plot.title = element_text(hjust = 0.5)) +
-  labs(colour = "Sex")
+  labs(colour = "Sex", tag = "b")
 
-plotSex = plot_grid(p[[2]], labels = c("b"))
-save_plot("./files/figure2b.pdf", plotSex, 
-          base_aspect_ratio = 1)
+save_plot("./files/figure2b.pdf", p[[2]], 
+           base_aspect_ratio = 1)
 
