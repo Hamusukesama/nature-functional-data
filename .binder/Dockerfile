@@ -1,4 +1,4 @@
-FROM rocker/tidyverse:3.5.3
+FROM kelshmo/covarr
 LABEL maintainer='Kelsey Montgomery'
 USER root
 COPY . ${HOME}
