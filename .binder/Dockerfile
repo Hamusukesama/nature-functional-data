@@ -1,4 +1,4 @@
-FROM rocker/binder:3.6.0
+FROM rocker/tidyverse:3.5.3
 LABEL maintainer='Kelsey Montgomery'
 USER root
 COPY . ${HOME}
