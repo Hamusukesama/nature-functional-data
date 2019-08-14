@@ -11,8 +11,6 @@ Authors@R:
 Description: RNASeq-related figures in the paper.
 License: What license it uses
 Depends:
-    R (= 3.5.3)
-Imports:
     BiocManager,
     biomaRt,
     CovariateAnalysis,
