@@ -10,9 +10,10 @@ Authors@R:
            comment = c(ORCID = "0000-0002-0126-8944"))
 Description: RNASeq-related figures in the paper.
 License: What license it uses
+biocViews:
 Depends:
     BiocManager,
-    BiocManager::biomaRt,
+    biomaRt,
     CovariateAnalysis,
     cowplot,
     data.table,
