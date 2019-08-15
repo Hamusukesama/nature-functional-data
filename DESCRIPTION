@@ -27,5 +27,9 @@ Depends:
     stringr,
     synapser,
     tidyr
+ Additional_repositories:
+    http://ran.synapse.org
+ Remotes:
+    th1vairam/CovariateAnalysis@dev
 Encoding: UTF-8
 LazyData: true
