@@ -1,4 +1,7 @@
 FROM rocker/binder:3.6.0
+RUN apt-get update -y\
+&& apt-get install -y dpkg-dev zlib1g-dev libssl-dev libffi-dev\
+&& apt-get install -y curl libcurl4-openssl-dev
 LABEL maintainer='Montgomery'
 USER root
 COPY . ${HOME}
