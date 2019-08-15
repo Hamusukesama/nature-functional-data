@@ -12,7 +12,7 @@ Description: RNASeq-related figures in the paper.
 License: What license it uses
 Depends:
     BiocManager,
-    biomaRt,
+    BiocManager::biomaRt,
     CovariateAnalysis,
     cowplot,
     data.table,
