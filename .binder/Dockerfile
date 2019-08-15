@@ -1,8 +1,6 @@
 FROM kelshmo/covarr
 LABEL maintainer='Montgomery'
 USER root
-RUN pwd
-RUN ls -la .
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
 USER ${NB_USER}
