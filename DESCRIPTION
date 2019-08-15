@@ -25,7 +25,7 @@ Depends:
     spatstat,
     stringr,
     synapser
- Additional_repositories:
+Additional_repositories:
     http://ran.synapse.org
 Encoding: UTF-8
 LazyData: true
