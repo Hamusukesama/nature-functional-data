@@ -14,6 +14,7 @@ biocViews:
 Depends:
     BiocManager,
     biomaRt,
+    CovariateAnalysis,
     cowplot,
     data.table,
     dplyr,
@@ -27,5 +28,7 @@ Depends:
     synapser
 Additional_repositories:
     http://ran.synapse.org
+Remotes:
+    th1vairam/CovariateAnalysis@dev
 Encoding: UTF-8
 LazyData: true
