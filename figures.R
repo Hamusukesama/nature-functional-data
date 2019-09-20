@@ -24,7 +24,7 @@ library(CovariateAnalysis)
 library(edgeR)
 library(stringr)
 
-# Login to Synapse - https://r-docs.synapse.org/articles/manageSynapseCredentials.html
+# Login to Synapse with apikey - https://r-docs.synapse.org/articles/manageSynapseCredentials.html
 synLogin()
 
 # Download counts (DLPFC - MSSM)
